@@ -226,21 +226,23 @@ ORDER BY warehouse
 
 
 -- EXPLORING WAREHOUSE D
--- HOW TO REORGANIZE THESE  ITEMS and INTO WHICH WAREWHOUSE?
--- WHAT ITEMS ARE STORED IN warehouse D?
--- WHAT ORDERS / CUSTOMER-PRODUCTS SHIPPED FROM IT?
+-- How to reorganize these items and into which warehouse?
+-- What items are stored in warehouse d?
+-- What orders / customer-products shipped from it?
 
-# In order to move items from warehouse D check what product line does each warehouse have
-# That will help to properly reconsdolidate items
-# WE CAN SEE THAT in warehouse D stored 'Trucks and Buses, Ships, Trains' productLine items
 
-# Of what productLine products are stored in warehouse D?
+-- In order to move items from warehouse D check what product-line does each warehouse have, that will help to properly reconsdolidate items
+-- What productLine products are stored in warehouse D?
+
 SELECT DISTINCT(productLine)
 FROM product_orders
 WHERE warehouse = 'd'
 ;
 
-# How many items are stored in each productLine in warehouse D?
+-- Warehouse D stored 'Trucks and Buses, Ships, Trains' productLine items
+
+-- How many items are stored in each productLine in warehouse D?
+
 SELECT DISTINCT(productLine),
 		SUM(DISTINCT(quantityInStock)) as total_items
  FROM product_orders
@@ -248,11 +250,11 @@ SELECT DISTINCT(productLine),
  GROUP BY productLine
 ;
 
-# Identify which orders contain warehouse D productLine items and also have items ordered from other warehouses
-# This will help  properly relocate items from warehouse D 
-# Also count how many items do each productline have in warehouse deallocate prepare
 
-# The most expensive order of warehouse D and total items ordered
+
+-- Identify which orders contain warehouse D productLine items and also have items ordered from other warehouses
+-- The most expensive order of warehouse D and total items ordered
+
 SELECT  DISTINCT(orderNumber),
         SUM(quantityOrdered * priceEach) AS total_order_price,
         SUM(quantityOrdered) AS total_items_ordred
@@ -263,8 +265,11 @@ ORDER BY total_order_price DESC
 LIMIT 10
 ;
 
-# FILTER BY ORDER_NUMBER - all orderds with productLine, quantity and warehouse
-# We manually entered first 10 most expensive orders to check what other warehouse they ship their products from. 
+
+
+-- FILTER BY ORDER_NUMBER - all orderds with productLine, quantity and warehouse
+-- We manually entered first 10 most expensive orders to check what other warehouse they ship their products from
+
 SELECT  DISTINCT(orderNumber),
 		productLine,
         quantityOrdered,
@@ -275,12 +280,12 @@ ORDER BY orderNumber
 ;
 
 
-# Conclusion.
-# Upon invetigating inventory and specifics of customer orders we can recommend to close warehouse D (South) 
-# and redistribute its items into warehouse B since most of the customers who ordered products from warehouse D 
-# were also oredering products from warehouse B. Additionally warehouse B has adequate available space.
+-- Conclusion.
+-- Upon invetigating inventory and specifics of customer orders we can recommend to close warehouse D (South) and
+-- redistribute its items into warehouse B since most of the customers who ordered products from warehouse D 
+-- were also oredering products from warehouse B. Additionally warehouse B has adequate available space.
 
-# Another option can be to redistribute items from warehouse D into B and C warehouses. 
-# But further examination of order specifics is required to determine which product lines need to be move to which warehouse.
+-- Another option can be to redistribute items from warehouse D into B and C warehouses. 
+-- But further examination of order specifics is required to determine which product lines need to be move to which warehouse.
 
-# We do not recomment redistribute items from warehouse D to warehpuse A - it doesn't have enough space.
+-- We do not recommend redistribute items from warehouse D to warehpuse A - it doesn't have enough space.
