@@ -1,14 +1,17 @@
-/* MINT CLASSICS project 
+/*
+
+MINT CLASSICS project 
  (3/3/2024)
 
 Business task: examine all tables and identify criteria for reorganization and invetory reduction process not to lose customers and profit
 Approach: anaylize customers and specific orders they have placed, and warehouse inventory to solve business task.
 Tools: MySQL workbench
-Skils: Joins, Aggregations, Temporary tables, 
+Skils: Joins, Aggregations, Temporary tables
+
 */
 
 -- SUMMARY STATISTICS
--- CUSTOMERS
+-- 1. CUSTOMERS
 -- Customer demographics - identify how many unique customers are in each counrty
 
 SELECT country,
@@ -143,7 +146,7 @@ ORDER BY total_ordered_items DESC
 
 
 
--- WAREHOUSE PERFORMANCE 
+-- 2. WAREHOUSE PERFORMANCE 
 -- Now that we got to know the customers we would like to identify which warehouse is the most profitable.
 -- Find out how many odrers is each warehouse dealing with.
 -- To explore each warehouse performance we create a temporary table 'product_orders' with specific columns from 'orderDetails' and 'products' we need for analysis.
@@ -225,7 +228,7 @@ ORDER BY warehouse
 
 
 
--- EXPLORING WAREHOUSE D
+-- 3. EXPLORING WAREHOUSE D
 -- How to reorganize these items and into which warehouse?
 -- What items are stored in warehouse d?
 -- What orders / customer-products shipped from it?
