@@ -1,6 +1,7 @@
 /*
 
-MINT CLASSICS project 
+WAREHOUSE INVENTORY OPTIMIZATION
+MINT CLASSICS 
  (3/3/2024)
 
 Business task: examine all tables and identify criteria for reorganization and invetory reduction process not to lose customers and profit
@@ -222,8 +223,32 @@ RIGHT JOIN wh_inventory ON  warehouses.warehouseCode = wh_inventory.warehouseCod
 ORDER BY warehouse
 ;
 
+-- Also we want analyze processing time of orders, and see which order took the longest time to process
+-- Processing time is defimned by time between the day order was placed and shipping date.alter
+
+SELECT productName,
+		productLine,
+        orderNumber,
+        quantityOrdered,
+        status,
+        DATEDIFF(shippedDate, orderDate) as processing_time,
+        warehouse
+FROM customer_summary
+ORDER BY processing_time DESC, warehouse
+;
+
+-- Calculating summary of processing times for each warehouse.
+
+SELECT warehouse,
+        AVG(DATEDIFF(shippedDate, orderDate)) as avg_processing_time,
+		MIN(DATEDIFF(shippedDate, orderDate)) as min_processing_time,
+		MAX(DATEDIFF(shippedDate, orderDate)) as max_processing_time
+FROM customer_summary
+GROUP BY warehouse
+;
+
 -- The largest warehouse is warehouse B and its 67% full.
--- The smallest is D, it is 75% full, and it sold the least amount of items. 
+-- The smallest is D, it is 75% full, and it sold the least amount of items with one of the longest processing times along with warehouse B 
 -- So we recommend to reconsolidate 79380 items from warehouse D to other warehouses
 
 
@@ -284,11 +309,8 @@ ORDER BY orderNumber
 
 
 -- Conclusion.
--- Upon invetigating inventory and specifics of customer orders we can recommend to close warehouse D (South) and
--- redistribute its items into warehouse B since most of the customers who ordered products from warehouse D 
--- were also oredering products from warehouse B. Additionally warehouse B has adequate available space.
-
+-- Upon invetigating inventory and specifics of customer orders we can recommend to close warehouse D (South) and redistribute its items into warehouse B since most of the customers who ordered products from warehouse D were also ordering products from warehouse B. 
+-- Additionally, warehouse B has adequate available space.
 -- Another option can be to redistribute items from warehouse D into B and C warehouses. 
 -- But further examination of order specifics is required to determine which product lines need to be move to which warehouse.
-
 -- We do not recommend redistribute items from warehouse D to warehpuse A - it doesn't have enough space.
