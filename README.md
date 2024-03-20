@@ -14,4 +14,4 @@ Analysis allowed to generate recommendations and suggestions for reorganizing  a
  
 3.	Filtering and Sorting: to identify specific inventory items or categories that need attention, I filtered and sorted the data based on various criteria. This included filtering items with low sales volume, high inventory levels.
  
-4.	Performance Analysis: I asssesed the performance of each warehouse inventory by analyzing key metrics such as itmes distribution, sales volumes, stock levels, pricing.
+4.	Performance Analysis: I asssesed the performance of each warehouse inventory by analyzing key metrics such as order processing times, sales volumes, stock levels, pricing.
